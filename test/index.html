@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Smile IPCC - Agent API test</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/apitest.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <h3>Smile Agent API Test</h3>
+    <div class="row">
+      <div class="twelve column" style="margin-top: 25px">
+        <input type="text" placeholder="Dial number" id="dial-input">
+        <button class="button-primary" id="call-btn">Call</button>
+        <button class="button-primary" id="answer-btn">Answer</button>
+        <button id="drop-btn">Drop</button>
+      </div>
+    </div>
+    <div class="row">
+      <button id="wrap-btn">Wrap</button>
+      <button id="pause-btn">Pause</button>
+      <button id="hold-btn">Hold</button>
+      <button id="conf-btn">Conf</button>
+      <button id="close-btn">Close</button>
+      <input type="number" style="width: 80px;" placeholder="Code" id="exit-code">
+    </div>
+    <div class="row">
+      <hr>
+      <p>Current state: </p>
+      <pre><code id="state-info"></code></pre>
+      <br>
+      <p>Current process: </p>
+      <pre><code id="process-info"></code></pre>
+    </div>
+  </div>
+  <audio id="audio-remote" autoplay="autoplay"></audio>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script type="text/javascript" src="js/lib/jssip-2.0.6.min.js"></script>
+  <script type="text/javascript" src="js/ipcc-agent.js"></script>
+  <script type="text/javascript" src="js/apitest.js"></script>
+</body>
+</html>
