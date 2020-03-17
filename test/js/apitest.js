@@ -26,14 +26,11 @@ window.onerror = function(msg, url, linenumber) {
         code,
         comment;
 
-    var connection = {
-        hostname: window.location.hostname,
-        wssport: window.location.port,
-        sipport: '5069',
-        agentlogin: 'oper2',
-        agentpwd: '123',
-        agentname: 'Oper 2'
-    };
+    var storage = window.localStorage;
+
+    if(storage.ClientConnectionParams) init(JSON.parse(storage.ClientConnectionParams));
+    else window.initClientModule = init;
+
 
     function addEvent(obj, evType, fn) {
       if (obj.addEventListener) obj.addEventListener(evType, fn, false);
@@ -70,7 +67,11 @@ window.onerror = function(msg, url, linenumber) {
         return fstate;
     }
 
-    function init(){
+    function init(params){
+
+        if(!params) return console.log('Please, specify connection params');
+
+        storage.ClientConnectionParams = JSON.stringify(params);
 
         addEvent(callBtn, 'click', call);
         addEvent(answerBtn, 'click', answer);
@@ -82,16 +83,18 @@ window.onerror = function(msg, url, linenumber) {
         addEvent(wrapBtn, 'click', idle);
         
         // Initiate module and subscribe on events
-        agent = SmileSoft.Agent({
-            websockets: true,
-            webrtc: true,
-            sip: {
-                ws_servers: 'wss://'+connection.hostname+':'+connection.wssport,
-                uri: 'sip:'+connection.agentlogin+'@'+connection.hostname+':'+connection.sipport,
-                password: connection.agentpwd,
-                display_name: connection.agentname,
-            }
-        });
+        agent = SmileSoft.Agent(params);
+
+        // agent = SmileSoft.Agent({
+        //     websockets: true,
+        //     webrtc: true,
+        //     sip: {
+        //         ws_servers: 'wss://'+connection.wshost,
+        //         uri: 'sip:'+connection.clientlogin+'@'+connection.siphost,
+        //         password: connection.clientpwd,
+        //         display_name: connection.clientname,
+        //     }
+        // });
         
         agent.on('Error', function (params){
           console.error('Error: ', params);
@@ -152,7 +155,5 @@ window.onerror = function(msg, url, linenumber) {
             if(code !== '' && code !== undefined) agent.pause(parseInt(code, 10), comment);
         }
     }
-
-    init();
 
 })(window, document);
