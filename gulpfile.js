@@ -12,7 +12,7 @@ var basePath = {
 	test: 'test/'
 };
 
-gulp.task('browserify', function() {
+function bundle(cb) {
 	var bundleStream = browserify(basePath.src+'main.js', {
 		standalone: 'SmileSoft',
 		bundleExternal: false,
@@ -26,18 +26,21 @@ gulp.task('browserify', function() {
 	.pipe(streamify(uglify()))
 	.pipe(rename({suffix: '.min'}))
 	.pipe(gulp.dest(basePath.dest))
-	.pipe(notify({ message: 'browserify task complete' }));
-});
+	.pipe(notify({ message: 'bundle task complete' }));
 
-gulp.task('build', function() {
-	gulp.start(['browserify', 'test']);
-});
+	cb();
+}
 
-gulp.task('default', function() {
-	gulp.start('build');
-});
+function build(cb) {
+	gulp.start(['bundle', 'test']);
+	cb();
+}
 
-gulp.task('test', function() {
-	return gulp.src(basePath.dest+'ipcc-agent.js')
+function test(cb) {
+	gulp.src(basePath.dest+'ipcc-agent.js')
 	.pipe(gulp.dest(basePath.test+'js/'));
-});
+	cb();
+}
+
+exports.bundle = bundle;
+exports.test = test;

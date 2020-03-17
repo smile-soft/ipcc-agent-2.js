@@ -1,4 +1,3 @@
-
 var WebRTC = require('./webrtc'),
 events = require('./events'),
 utils = require('./utils'),
@@ -118,8 +117,7 @@ function onWebsocketError(error){
  */
 function init(){
 	if(options.webrtc){
-		console.log('Initiating WebRTC module');
-		WebRTC.init({sip: options.sip, audioRemote: options.audioRemote});
+		WebRTC.init({sip: options.sip});
 	}
 	if(!options.websockets){
 		if(websocket !== undefined) websocket.close();
@@ -291,11 +289,11 @@ api = {
 	 * @return none
 	 */
 	answer: function(){
-		// if(options.webrtc) {
-		// 	WebRTC.answer();
-		// } else {
+		if(options.webrtc) {
+			WebRTC.answer();
+		} else {
 			sendRequest('answerCall');
-		// }
+		}
 	},
 
 	/**

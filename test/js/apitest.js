@@ -26,6 +26,15 @@ window.onerror = function(msg, url, linenumber) {
         code,
         comment;
 
+    var connection = {
+        hostname: window.location.hostname,
+        wssport: window.location.port,
+        sipport: '5069',
+        agentlogin: 'oper2',
+        agentpwd: '123',
+        agentname: 'Oper 2'
+    };
+
     function addEvent(obj, evType, fn) {
       if (obj.addEventListener) obj.addEventListener(evType, fn, false);
       else if (obj.attachEvent) obj.attachEvent("on"+evType, fn);
@@ -77,13 +86,11 @@ window.onerror = function(msg, url, linenumber) {
             websockets: true,
             webrtc: true,
             sip: {
-                ws_servers: 'wss://'+window.location.host,
-                // authorization_user: 'api1',
-                uri: 'sip:oper1@'+window.location.host,
-                password: '123',
-                display_name: 'Oper 1',
-            },
-            audioRemote: document.getElementById('audio-remote')
+                ws_servers: 'wss://'+connection.hostname+':'+connection.wssport,
+                uri: 'sip:'+connection.agentlogin+'@'+connection.hostname+':'+connection.sipport,
+                password: connection.agentpwd,
+                display_name: connection.agentname,
+            }
         });
         
         agent.on('Error', function (params){
