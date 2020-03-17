@@ -26,10 +26,10 @@ window.onerror = function(msg, url, linenumber) {
         code,
         comment;
 
-    var storage = window.localStorage;
+    // var storage = window.localStorage;
 
-    if(storage.ClientConnectionParams) init(JSON.parse(storage.ClientConnectionParams));
-    else window.initClientModule = init;
+    // if(storage.ClientConnectionParams) init(JSON.parse(storage.ClientConnectionParams));
+    window.initClientModule = init;
 
 
     function addEvent(obj, evType, fn) {
@@ -71,7 +71,7 @@ window.onerror = function(msg, url, linenumber) {
 
         if(!params) return console.log('Please, specify connection params');
 
-        storage.ClientConnectionParams = JSON.stringify(params);
+        // storage.ClientConnectionParams = JSON.stringify(params);
 
         addEvent(callBtn, 'click', call);
         addEvent(answerBtn, 'click', answer);
